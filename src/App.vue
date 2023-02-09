@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Myheader :addtodo="addtodo" />
-    <Mylist :todos="todos" :checktodo="checktodo" :deltodo="deltodo"/>
-    <Myfooter :todos="todos" :checkalltodo="checkalltodo" :delalltodo="delalltodo"/>
+    <Myheader @addtodo="addtodo" />
+    <Mylist :todos="todos"/>
+    <Myfooter :todos="todos" :checkalltodo="checkalltodo" @delalltodo="delalltodo"/>
   </div>
 </template>
 
@@ -34,6 +34,12 @@
           if(todo.id === id ) todo.done = !todo.done
         })
       },
+      //修改
+      updatetodo(id,title){
+        this.todos.forEach((todo)=>{
+          if(todo.id === id ) todo.title = title
+        })
+      },
       //刪除
       deltodo(id){
         this.todos = this.todos.filter((todo)=>{
@@ -60,7 +66,18 @@
         localStorage.setItem('todos',JSON.stringify(value))
         }
       }
+    },
+    mounted(){
+      this.$bus.$on('checktodo',this.checktodo)
+      this.$bus.$on('deltodo',this.deltodo)
+      this.$bus.$on('updatetodo',this.updatetodo)
+    },
+    beforeDestroy(){
+      this.$bus.off('checktodo')
+      this.$bus.off('deltodo')
+      this.$bus.off('updatetodo')
     }
+
 }
 </script>
 

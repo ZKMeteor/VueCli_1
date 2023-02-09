@@ -10,12 +10,11 @@
     import {nanoid} from 'nanoid'
     export default {
         name:'Myheader',
-        props:['addtodo',],
         methods:{
             add(e){
                 if(!e.target.value)return
                 const todobj = {id:nanoid(),title:e.target.value,done:false}
-                this.addtodo(todobj)
+                this.$emit('addtodo',todobj)
                 e.target.value = ''
             }
         }

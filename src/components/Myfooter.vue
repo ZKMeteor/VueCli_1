@@ -16,13 +16,13 @@
 <script>
 export default {
     name:'Myheader',
-    props:['todos','checkalltodo','delalltodo'],
+    props:['todos','checkalltodo'],
     methods:{
       checkall(e){
         this.checkalltodo(e.target.checked)
       },
       delall(){
-        this.delalltodo()
+        this.$emit('delalltodo')
       }
     },
     computed:{
